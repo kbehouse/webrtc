@@ -29,6 +29,8 @@ type RTPSender struct {
 
 	mu                     sync.RWMutex
 	sendCalled, stopCalled chan interface{}
+	// Kartik Add
+	payloadType uint8
 }
 
 // NewRTPSender constructs a new RTPSender
@@ -182,6 +184,10 @@ func (r *RTPSender) SendRTP(header *rtp.Header, payload []byte) (int, error) {
 			return 0, err
 		}
 
+		if r.payloadType > 0 {
+			header.SetPayloadtype(r.payloadType)
+		}
+
 		return writeStream.WriteRTP(header, payload)
 	}
 }
@@ -194,4 +200,14 @@ func (r *RTPSender) hasSent() bool {
 	default:
 		return false
 	}
+}
+
+// SetPayloadtype set the payloadType of this
+func (r *RTPSender) SetPayloadtype(pt uint8) {
+	r.payloadType = pt
+}
+
+// Payloadtype set the payloadType of this
+func (r *RTPSender) Payloadtype() uint8 {
+	return r.payloadType
 }
