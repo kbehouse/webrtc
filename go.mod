@@ -1,4 +1,4 @@
-module github.com/pion/webrtc/v2
+module github.com/kbehouse/webrtc/v2
 
 go 1.12
 
