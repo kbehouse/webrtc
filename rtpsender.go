@@ -190,7 +190,8 @@ func (r *RTPSender) SendRTP(header *rtp.Header, payload []byte) (int, error) {
 			return 0, err
 		}
 		if r.payloadType > 0 {
-			header.SetPayloadType(r.payloadType)
+			// header.SetPayloadType(r.payloadType)
+			header.PayloadType = r.payloadType
 		}
 
 		return writeStream.WriteRTP(header, payload)
